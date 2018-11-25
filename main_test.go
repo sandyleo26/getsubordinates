@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_getSubOrdinates(t *testing.T) {
+func Test_getSubOrdinatesRequired(t *testing.T) {
 	roles := []Role{
 		Role{
 			ID:     1,
@@ -65,6 +65,17 @@ func Test_getSubOrdinates(t *testing.T) {
 
 	setRoles(roles)
 	setUsers(users)
-	assert.Equal(t, []User{users[1], users[4]}, getSubOrdinates(3))
-	assert.ElementsMatch(t, users[1:], getSubOrdinates(1))
+	// provided
+	results, _ := getSubOrdinates(3)
+	assert.Equal(t, []User{users[1], users[4]}, results)
+	results, _ = getSubOrdinates(1)
+	assert.ElementsMatch(t, users[1:], results)
+
+}
+
+func Test_getSubOrdinatesErrorCondition(t *testing.T) {
+	// no user
+	results, err := getSubOrdinates(1)
+	assert.Nil(t, results)
+	assert.Contains(t, err.Error(), "not found")
 }
