@@ -63,5 +63,6 @@ func main() {
 	r.HandleFunc("/users", postUsers).Methods("POST")
 	r.HandleFunc("/subordinates/{id}", httpGetSubOrdinates).Methods("GET")
 	http.Handle("/", r)
+	fmt.Println("Listenning :8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
