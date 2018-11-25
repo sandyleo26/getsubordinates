@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 //Role represents a role
 type Role struct {
 	ID     int
@@ -7,14 +9,32 @@ type Role struct {
 	Parent int
 }
 
+var roles []Role
 var roleMap map[int][]int
 
+//getRole return role by roleID
+func getRole(roleID int) (Role, error) {
+	if roleID > len(roles) {
+		return Role{}, fmt.Errorf("roleID (%v) not found", roleID)
+	}
+	return roles[roleID-1], nil
+}
+
 //setRoles initialise global role info
-func setRoles(someRoles []Role) {
+func setRoles(someRoles []Role) error {
+	roles = make([]Role, 0)
+	roles = append(roles, someRoles...)
 	roleMap = make(map[int][]int, 0)
 	for _, role := range someRoles {
+		// make sure parent exists except 0
+		if role.Parent != 0 {
+			if _, err := getRole(role.Parent); err != nil {
+				return err
+			}
+		}
 		roleMap[role.Parent] = append(roleMap[role.Parent], role.ID)
 	}
+	return nil
 }
 
 //getDescendants returns descendant role IDs given the parent role ID

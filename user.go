@@ -16,6 +16,7 @@ var roleIDUserIDMap map[int][]int
 
 //setUsers initialise global user info
 func setUsers(someUsers []User) {
+	users = make([]User, 0)
 	users = append(users, someUsers...)
 	roleIDUserIDMap = make(map[int][]int, 0)
 	for _, user := range someUsers {
@@ -25,7 +26,7 @@ func setUsers(someUsers []User) {
 
 //getUser returns user info given userID
 func getUser(userID int) (User, error) {
-	if userID >= len(users) {
+	if userID > len(users) {
 		return User{}, fmt.Errorf("userID (%v) not found", userID)
 	}
 	return users[userID-1], nil

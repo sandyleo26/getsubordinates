@@ -70,11 +70,11 @@ func Test_getSubOrdinatesRequired(t *testing.T) {
 	assert.Equal(t, []User{users[1], users[4]}, results)
 	results, _ = getSubOrdinates(1)
 	assert.ElementsMatch(t, users[1:], results)
-
 }
 
 func Test_getSubOrdinatesErrorCondition(t *testing.T) {
 	// no user
+	setUsers([]User{})
 	results, err := getSubOrdinates(1)
 	assert.Nil(t, results)
 	assert.Contains(t, err.Error(), "not found")
