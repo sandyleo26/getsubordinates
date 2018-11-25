@@ -54,7 +54,7 @@ func getSubOrdinates(userID int) ([]User, error) {
 	}
 
 	resutls := []User{}
-	descendantRoleIDs := getDescendants(user.Role)
+	descendantRoleIDs := getDescendants2(user.Role)
 	for _, roleID := range descendantRoleIDs {
 		found, err := getUsersByRoleID(roleID)
 		if err != nil {

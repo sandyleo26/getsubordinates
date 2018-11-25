@@ -32,3 +32,33 @@ func Test_getDescendants(t *testing.T) {
 	assert.ElementsMatch(t, []int{4}, getDescendants(3))
 	assert.ElementsMatch(t, []int{}, getDescendants(4))
 }
+
+func Test_setRolesLoop(t *testing.T) {
+	err := setRoles([]Role{
+		Role{
+			ID:     1,
+			Parent: 0,
+		},
+		Role{
+			ID:     2,
+			Parent: 2,
+		},
+	})
+	assert.Contains(t, err.Error(), "Loop found")
+
+	err = setRoles([]Role{
+		Role{
+			ID:     1,
+			Parent: 0,
+		},
+		Role{
+			ID:     2,
+			Parent: 3,
+		},
+		Role{
+			ID:     3,
+			Parent: 2,
+		},
+	})
+	assert.Contains(t, err.Error(), "Loop found")
+}
