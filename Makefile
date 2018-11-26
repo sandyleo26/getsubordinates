@@ -20,3 +20,7 @@ build: clean ## build the executable
 .PHONY: start
 start: build
 	./deputy
+
+.PHONY: test
+test:
+	go test
