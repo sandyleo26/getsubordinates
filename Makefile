@@ -1,4 +1,4 @@
-
+OUT := getsubordinates
 
 .PHONY: setup
 setup:
@@ -11,7 +11,7 @@ dep:
 
 .PHONY: clean
 clean:
-	rm -f deputy
+	rm -f ${OUT}
 
 .PHONY: build
 build: clean ## build the executable
@@ -19,7 +19,7 @@ build: clean ## build the executable
 
 .PHONY: start
 start: build
-	./deputy
+	./${OUT}
 
 .PHONY: test
 test:
